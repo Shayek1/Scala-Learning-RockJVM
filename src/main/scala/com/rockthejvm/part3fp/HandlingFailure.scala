@@ -1,8 +1,10 @@
 package com.rockthejvm.part3fp
 
+import scala.util.Random
 import scala.util.Try
 import scala.util.Success
 import scala.util.Failure
+
 
 object HandlingFailure {
 
@@ -43,10 +45,41 @@ object HandlingFailure {
   val stringLengthPure = Try(unsafemethod()).map(_.length).getOrElse(-1)
 
   //Designing an API
-  def bettterUnsafeMethod(): Try[String] = Failure(new RuntimeException("No string for you my friend"))
+  def betterUnsafeMethod(): Try[String] = Failure(new RuntimeException("No string for you my friend"))
   def betterBackupMethod(): Try[String] = Success("Scala")
-  val stringLengthPureV2 = bettterUnsafeMethod().map(_.length)
+  val stringLengthPureV2 = betterUnsafeMethod().map(_.length)
   val aSafeChain = betterUnsafeMethod().orElse(betterBackupMethod())
+
+  /**
+   * Exercise
+   * 1. obtain a connection
+   * 2. then fetch the url
+   * then print the resulting HTML
+   */
+
+
+  val host = "localhost"
+  val port = "8081"
+  val myDesiredURL = "rockthejvm.com/home"
+
+  class Connection {
+    val random = new Random()
+
+    def get(url:String): String = {
+      if (random.nextBoolean()) "<html>Sucess</html>"
+      else throw new RuntimeException("Cannot fetch page right now")
+    }
+  }
+
+  object HttpService {
+    val random = new Random()
+
+    def getConnection(host:String, port:String): Connection =
+      if (random.nextBoolean()) new Connection
+      else throw new RuntimeException("Cannot access host/port combination.")
+  }
+
+  
 
   def main(args: Array[String]): Unit = {
     println(aTestOfTry)
