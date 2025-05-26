@@ -79,12 +79,17 @@ object HandlingFailure {
       else throw new RuntimeException("Cannot access host/port combination.")
   }
 
+  //Attempt:
+  val grabConnect = Try(HttpService.getConnection(host, port))
+  val grabHtml = grabConnect.flatMap(conn => Try(conn.get(myDesiredURL)))
+  val attemptAnswer = grabHtml.fold(e => s"<html>${e.getMessage}</html>", s => s)
   
 
   def main(args: Array[String]): Unit = {
     println(aTestOfTry)
     println(checkSuccess)
     println(checkFail)
+    println(attemptAnswer)
 
 
 
