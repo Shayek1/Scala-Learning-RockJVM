@@ -16,8 +16,21 @@ object AllThePatterns {
   }
 
   //Matching anything
+  val matchAnyVar = aVal match{
+    case something => s"I have matched anything, it is $something"
+  }
+  //the _ replaces something
+  val matchAny = aVal match{
+    case _ => "I can match anything, trust me" //case _ is the default case that matches with anything. Best to keep last
+  }
 
 
+  // tuples
+  val aTuple = (1,5)
+  val matchTuple = aTuple match{
+    case (1, aThing) => s"A tuple with 1 and $aThing"
+    case (anotherThing, 2) => "A tuple with 2 as its second field"
+  }
 
   def main(args: Array[String]): Unit = {
 
