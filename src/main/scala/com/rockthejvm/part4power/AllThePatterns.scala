@@ -85,8 +85,29 @@ object AllThePatterns {
     //this basically makes the case more specific for matching, the more specific the more higher up in the pattern matching it should be
   }
 
+  //Example: does it make sense?
+  val aSimpleInt = 45
+  val isEven_bad = aSimpleInt match{
+    case n if n % 2 == 0 => true
+    case _ => false
+  }
+  //doesn't make sense as the code is too much for just a boolean check
+  val isEven_bad_correst = aSimpleInt % 2 == 0 //this would give a true or false
 
+  /**
+   * exercise
+   */
+  val numbers: List[Int] = List(1,2,3,4)
+  val numbersMatch = numbers match{
+    case listOfStrings: List[String] => "a list of strings"
+    case listOfInts: List[Int] => "a list of numbers"
+  }
 
+  /** In this case, the first case would be matched
+   * This is due to pattern matching running at runtime
+   * during runtime, generic types get erased
+   * therefore all of them are just seen as Lists, regardless of type
+   */
 
   def main(args: Array[String]): Unit = {
 
